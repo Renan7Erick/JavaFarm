@@ -5,81 +5,31 @@ public class Terreno {
     private Batata batata;
     private Cenoura cenoura;
     private Morango morango;
+    private final int x;
+    private final int y;
 
-    public Terreno() {
-        this.batata = null;
-        this.cenoura = null;
-        this.morango = null;
+    public Terreno(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
-    public boolean estaVazio() {
-        return batata == null && cenoura == null && morango == null;
+    public void plantar(Batata batata) {
+        if (!estaOcupado())
+            this.batata = batata;
     }
 
-    public boolean isOcupado() {
-        return !estaVazio();
+    public void plantar(Morango morango) {
+        if (!estaOcupado())
+            this.morango = morango;
     }
 
-    public void plantarBatata() {
-        if (isOcupado()) {
-            throw new IllegalStateException("O terreno já se encontra ocupado!");
-        }
-        this.batata = new Batata();
+    public void plantar(Cenoura cenoura) {
+        if (!estaOcupado())
+            this.cenoura = cenoura;
     }
 
-    public void plantarCenoura() {
-        if (isOcupado()) {
-            throw new IllegalStateException("O terreno já se encontra ocupado!");
-        }
-        this.cenoura = new Cenoura();
-    }
-
-    public void plantarMorango() {
-        if (isOcupado()) {
-            throw new IllegalStateException("O terreno já se encontra ocupado!");
-        }
-        this.morango = new Morango();
-    }
-
-    public void crescer() {
-        if (batata != null) {
-            batata.crescer();
-        } else if (cenoura != null) {
-            cenoura.crescer();
-        } else if (morango != null) {
-            morango.crescer();
-        }
-    }
-
-    public boolean podeColher() {
-        if (batata != null) {
-            return batata.podeColher();
-        } else if (cenoura != null) {
-            return cenoura.podeColher();
-        } else if (morango != null) {
-            return morango.podeColher();
-        }
-        return false;
-    }
-
-    public void colher() {
-        if (!podeColher()) {
-            throw new IllegalStateException("A planta ainda não está pronta para ser colhida!");
-        }
-        this.batata = null;
-        this.cenoura = null;
-        this.morango = null;
-    }
-
-    public String getImagem() {
-        if (batata != null) {
-            return batata.getImagem();
-        } else if (cenoura != null) {
-            return cenoura.getImagem();
-        } else if (morango != null) {
-            return morango.getImagem();
-        }
-        return "images/terra.png";
+    public boolean estaOcupado() {
+        return batata != null || cenoura != null || morango != null;
     }
 
     public Batata getBatata() {
@@ -92,5 +42,13 @@ public class Terreno {
 
     public Morango getMorango() {
         return morango;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }
